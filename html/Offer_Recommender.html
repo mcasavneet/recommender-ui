@@ -1,18 +1,34 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<style>
-		html, body {
-			margin: 0;
-			padding: 0;
-		}
-
-		img {margin:0; float: left;}
-	</style>
+	<script type="text/javascript" src="../scripts/sure_shot.js"></script>
+   <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+   <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+   <link rel="stylesheet" type="text/css" href="../css/recommender.css" />
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script type="text/javascript" >
+		 $(function() {
+    $( "#tabs" ).tabs();
+ 	 });
+	</script>
 </head>
 <body>
-	<div style="margin: 0; text-align: center">
-		<img src="images/pubTop.png" />
-	</div>
+	<div><img src="../images/pubTop.png" /></div>
+	 <div id="tabs">
+ 	 <ul>
+    <li><a href="#tabs-1">Sure Shot</a></li>
+    <li><a href="#tabs-2">Recommender</a></li>
+    <li><a href="#tabs-3">$$</a></li>
+  	</ul>
+  	<div id="tabs-1">
+    
+  	</div>
+  	<div id="tabs-2">
+    
+  	</div>
+  	<div id="tabs-3">
+    
+  	</div>
+</div>
 </body>
 </html>
