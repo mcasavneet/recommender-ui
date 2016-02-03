@@ -2,10 +2,10 @@
 <html>
 <head>
 	<script type="text/javascript" src="../scripts/sure_shot.js"></script>
-   <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-   <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+   <script src="../thirdParty/external/jquery/jquery.js"></script>
+   <script src="../thirdParty/jquery-ui.js"></script>
    <link rel="stylesheet" type="text/css" href="../css/recommender.css" />
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link href="../thirdParty/jquery-ui.css" rel="stylesheet">
 	<script type="text/javascript" >
 		 $(function() {
     $( "#tabs" ).tabs();
@@ -14,11 +14,11 @@
 </head>
 <body>
 	<div><img src="../images/pubTop.png" /></div>
-	 <div id="tabs">
+	 <div class="tabs" id="tabs">
  	 <ul>
-    <li><a href="#tabs-1">Sure Shot</a></li>
-    <li><a href="#tabs-2">Recommender</a></li>
-    <li><a href="#tabs-3">$$</a></li>
+   	 	<li><a href="#tabs-1">Sure Shot</a></li>
+    		<li><a href="#tabs-2">Recommender</a></li>
+    		<li><a href="#tabs-3">$$</a></li>
   	</ul>
   	<div id="tabs-1">
     
