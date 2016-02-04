@@ -10,6 +10,9 @@
 	<!--<script type="text/javascript" src="/assets/script/jquery-1.11.1.min.js"></script>-->
 	<script type="text/javascript" src="../thirdParty/jquery.canvasjs.min.js"></script>
 
+	<script type="text/javascript" src="../thirdParty/jqcloud.js"></script>
+	<link href="../thirdParty/jqcloud.css" rel="stylesheet">
+
 
 	<script type="text/javascript" >
 		 $(function() {
@@ -21,12 +24,20 @@
 											  {
 													loadGraph('GEO');
        										  }
+       										  if (ui.newPanel.selector == "#tabs-3")
+											  {
+													loadWordCloud();
+       										  }
     							}
 							});
  	 				});
 
 
  	 				function loadGraph(ele){
+ 	 				document.getElementById('my_favorite_latin_words').style.visibility='hidden';
+					document.getElementById('my_favorite_latin_words').style.display='none';
+					document.getElementById('chartContainer').style.visibility='visible';
+					document.getElementById('chartContainer').style.display='block';
 					var url;
 
  	 				switch (ele) {
@@ -37,7 +48,7 @@
 											url="http://localhost:9090/html/example.json";
 											break;
 										case 'MAXF':
-											url="http://localhost:9090/html/example.json";
+											url="http://172.16.2.45:8585/trending/platforms";
 											break;
 										case 'ADSIZ':
 											url="http://localhost:9090/html/example.json";
@@ -59,7 +70,9 @@
 													]
 												};
 
-												var jqxhr = $.getJSON( url, function(data) {
+												var jqxhr = $.getJSON(
+																	url,
+																	function(data) {
 												console.log( "success" );
 												}).done(function(data) {
 													$.each( data, function( i, item ) {
@@ -72,6 +85,66 @@
 													console.log( "complete" );
 												  });
  	 				}
+
+
+
+
+
+function loadWordCloud() {
+
+document.getElementById('chartContainer').style.visibility='hidden';
+document.getElementById('chartContainer').style.display='none';
+document.getElementById('my_favorite_latin_words').style.visibility='visible';
+document.getElementById('my_favorite_latin_words').style.display='block';
+
+var word_list = [
+{text: "teachers", weight: 50, html: {"data-tooltip": "50"}},
+{text: "classes", weight: 44, html: {"data-tooltip": "44"}},
+{text: "exercises", weight: 35, html: {"data-tooltip": "35"}},
+{text: "videos", weight: 34, html: {"data-tooltip": "34"}},
+{text: "course", weight: 34, html: {"data-tooltip": "34"}},
+{text: "online", weight: 31, html: {"data-tooltip": "31"}},
+{text: "quality", weight: 29, html: {"data-tooltip": "29"}},
+{text: "improve", weight: 29, html: {"data-tooltip": "29"}},
+{text: "site", weight: 28, html: {"data-tooltip": "28"}},
+{text: "sat", weight: 28, html: {"data-tooltip": "28"}},
+{text: "lessons", weight: 28, html: {"data-tooltip": "28"}},
+{text: "acme", weight: 28, html: {"data-tooltip": "28"}},
+{text: "live", weight: 27, html: {"data-tooltip": "27"}},
+{text: "content", weight: 27, html: {"data-tooltip": "27"}},
+{text: "good", weight: 26, html: {"data-tooltip": "26"}},
+{text: "time", weight: 26, html: {"data-tooltip": "26"}},
+{text: "excellent", weight: 26, html: {"data-tooltip": "26"}},
+{text: "material", weight: 26, html: {"data-tooltip": "26"}},
+{text: "well", weight: 25, html: {"data-tooltip": "25"}},
+{text: "teachers", weight: 50, html: {"data-tooltip": "50"}},
+{text: "classes", weight: 44, html: {"data-tooltip": "44"}},
+{text: "exercises", weight: 35, html: {"data-tooltip": "35"}},
+{text: "videos", weight: 34, html: {"data-tooltip": "34"}},
+{text: "course", weight: 34, html: {"data-tooltip": "34"}},
+{text: "online", weight: 31, html: {"data-tooltip": "31"}},
+{text: "quality", weight: 29, html: {"data-tooltip": "29"}},
+{text: "improve", weight: 29, html: {"data-tooltip": "29"}},
+{text: "site", weight: 28, html: {"data-tooltip": "28"}},
+{text: "sat", weight: 28, html: {"data-tooltip": "28"}},
+{text: "lessons", weight: 28, html: {"data-tooltip": "28"}},
+{text: "acme", weight: 28, html: {"data-tooltip": "28"}},
+{text: "live", weight: 27, html: {"data-tooltip": "27"}},
+{text: "content", weight: 27, html: {"data-tooltip": "27"}},
+{text: "good", weight: 26, html: {"data-tooltip": "26"}},
+{text: "time", weight: 26, html: {"data-tooltip": "26"}},
+{text: "excellent", weight: 26, html: {"data-tooltip": "26"}},
+{text: "material", weight: 26, html: {"data-tooltip": "26"}},
+{text: "well", weight: 25, html: {"data-tooltip": "25"}}
+      ];
+
+
+   $("#my_favorite_latin_words").jQCloud(word_list,
+        {
+          shape: "rectangular",
+          autoResize: true
+        });
+}
 
 	</script>
 
@@ -152,11 +225,12 @@
 				<td width="80%">
 					<div id="chartContainer" style="height: 300px;width:75%;">
 					</div>
+					<div id="my_favorite_latin_words" style="visibility:hidden;display:none;width: 550px; height: 350px; border: 1px solid #ccc;"></div>
 				</td>
 				<td width="20%">
 					<div id="buttons">
 						<a href="#"  onclick="loadGraph('GEO');" class="btn blue">Geo</a>
-						<a href="#" onclick="loadGraph('FREE');" class="btn green">Free Text</a>
+						<a href="#" onclick="loadWordCloud();" class="btn green">Free Text</a>
 						<a href="#" onclick="loadGraph('MAXF');" class="btn red">Max. Filters</a>
 						<a href="#" onclick="loadGraph('ADSIZ');" class="btn purple">Adsizes</a>
 						<a href="#" onclick="loadGraph('CAT');" class="btn orange">Category</a>
@@ -170,7 +244,7 @@
 
 	</div>
   	<div id="tabs-3">
-    
+
   	</div>
 </div>
 
