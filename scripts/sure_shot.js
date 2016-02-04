@@ -1,4 +1,63 @@
 $(document).ready(function(){
+	   var selectedDataBlockId ;
+	   
+	 function createOffer() {
+      var valid = true;
+      name = document.getElementById('name').value;
+		ecpm = document.getElementById('ecpm').value;
+ 		jsonObj = [];
+		item={};
+		item["name"]=name;
+		item["ecpm"]=ecpm;
+		var savedSearchData = selectedDataBlockId.split(',');
+		item["name"]=name;
+		item["ecpm"]=ecpm;
+		item["startDate"]=savedSearchData[1];
+		item["endDate"]=savedSearchData[2];
+		item["accountId"]=savedSearchData[3];
+		item["accountType"]=savedSearchData[4];
+		jsonObj.push(item);
+      console.log(jsonObj);
+      var jsonString = JSON.stringify(jsonObj);
+      console.log(jsonString);
+      
+		var url = 'http://localhost:9090/offers/create';
+		$.post(url,jsonString,function(data, status){
+        alert("Data: " + data + "\nStatus: " + status);
+    });
+}
+		
+		
+		
+		
+	   dialog = $( "#dialog-form" ).dialog({
+      autoOpen: false,
+      modal: true,
+      buttons: {
+        "Create Offer": createOffer,
+        Cancel: function() {
+          dialog.dialog( "close" );
+        }
+      },
+      close: function() {
+    		dialog.dialog( "close" );
+      }
+    });
+ 
+    form = dialog.find( "form" ).on( "submit", function( event ) {
+      event.preventDefault();
+      addUser();
+    });
+ 
+    $( "#createOfferButton" ).button().on( "click", function() {
+		if(selectedDataBlockId === undefined){
+			alert('Please select any saved search');  
+			return;
+		}    
+      dialog.dialog( "open" );
+    });
+    
+    
 	$(function() {
     $( "#tabs" ).tabs();
  	 });
@@ -253,6 +312,16 @@ $.ajax({
     
 });
 
+$("#data_table").on('click', 'tr', function () {
+	if(document.getElementById(selectedDataBlockId) != null) {
+			document.getElementById(selectedDataBlockId).style.color="black";
+			document.getElementById(selectedDataBlockId).style.fontWeight ="normal";
+	}
+	document.getElementById(this.id).style.color = "blue";
+	document.getElementById(this.id).style.fontWeight ="bold";
+   selectedDataBlockId = this.id;
+    
+});
 
 $( "#applyFilterButton" ).on( "click", function() {
     var savedSearchUrl =  'http://localhost:9090/SavedOfferAlerts/filter'    
@@ -329,39 +398,35 @@ $( "#applyFilterButton" ).on( "click", function() {
         		 var adSizes = data.content[i].uijson.adSizeList;
         		 var preapproved = data.content[i].uijson.preApproved;
         		 var searchTag = data.content[i].uijson.searchTags;
-        		 var tbodyId = nam + i.toString();
+        		 var tbodyId = nam + ',' + data.content[i].startDate + ',' + data.content[i].endDate + ',' + data.content[i].accountId + ',' + data.content[i].accountType;  
         		 $('#savedSearchfieldset').show();
-        		 $('#data_table').append( '<tbody id=' + tbodyId + 'class=\'datalabelSpan\'><tr>' +
+        		 $('#createOfferButtonDiv').show();
+
+        		 $('#data_table').append( '<tbody id=\'' + tbodyId + '\'class=\'dataBlockTbody\'><tr id=\'' + tbodyId + '\'>' +
         		 '<td>Name :</td><td>' + nam + '</td>' +
         		 '<td>Start date :</td><td>' + startDate + '</td>' +
         		 '<td>End date :</td><td>' + endDate + '</td>' +
-        		 '</tr><tr>' +
+        		 '</tr><tr id=\'' + tbodyId + '\'>' +
         		 '<td>Requested By :</td><td>' + requestedById + '</td>' +
         		 '<td>Impressions :</td><td>' + impressions + '</td>' +
-        		 '</tr><tr>' +
+        		 '</tr><tr id=\'' + tbodyId + '\'>' +
         		 '<td>Ecpm :</td><td>' + ecpm + '</td>' +
         		 '<td>Geos :</td><td>' + geos + '</td>' +
-        		 '</tr><tr>' +
+        		 '</tr><tr id=\'' + tbodyId + '\'>' +
         		 '<td>Platforms :</td><td>' + platforms + '</td>' +
 				 '<td>AdSizes :</td><td>' + adSizes + '</td>' +
-				 '</tr><tr>' +
+				 '</tr><tr id=\'' + tbodyId + '\'>' +
 				 '<td>Pre Approved :</td><td>' + preapproved + '</td>' +
 				 '<td>Search Tag :</td><td>' + searchTag + '</td>' +
-				 '<tr><td colspan="10"><hr></td></tr>' +
+				 '<tr id=\'' + tbodyId + '\'><td colspan="10"><hr></td></tr>' +
         		 '</tr></tbody>'); 
 			
-				  $('tbodyId').hover(function() {
-  						$( this ).backgroundColor = 'blue';
- 						$( this ).color = 'black' ;
-				  });	
 				  //$('#data_table').append('<div id='+);
         		 
         		 
     }
     }
 });
-
-    		
 });
-
+	
 });
