@@ -2,7 +2,12 @@ $(document).ready(function(){
 	$(function() {
     $( "#tabs" ).tabs();
  	 });
-
+function split( val ) {
+      return val.split( /,\s*/ );
+    }
+function extractLast( term ) {
+      return split( term ).pop();
+    }
 
 $.ajax({ 
     type: 'GET', 
@@ -10,13 +15,51 @@ $.ajax({
     data: { PubToken: 'adminuser' }, 
     dataType: 'json',
     success: function (data) { 
-        for (var i = 0, len = data.items.length; i < len; i++) {
+        /*for (var i = 0, len = data.items.length; i < len; i++) {
         		 $('#buyerFilter').append($('<option/>', { 
        				 value: data.items[i].id,
      					 text : data.items[i].name
     	}));
+    }*/
+    var buyersList = [] ;
+    for (var index = 0;index < data.items.length;index++) {
+    	buyersList[index] = data.items[index].name + '[' + data.items[index].id + ']';
     }
-    }
+    $( "#buyerFilter" )
+      // don't navigate away from the field on tab when selecting an item
+      .bind( "keydown", function( event ) {
+        if ( event.keyCode === $.ui.keyCode.TAB &&
+            $( this ).autocomplete( "instance" ).menu.active ) {
+          event.preventDefault();
+        }
+      })
+      .autocomplete({
+        minLength: 0,
+        source: function( request, response ) {
+          // delegate back to autocomplete, but extract the last term
+          response( $.ui.autocomplete.filter(
+            buyersList, extractLast( request.term ) ) );
+        },
+        focus: function() {
+          // prevent value inserted on focus
+          return false;
+        },
+        select: function( event, ui ) {
+          var terms = split( this.value );
+          // remove the current input
+          terms.pop();
+          // add the selected item
+          terms.push( ui.item.value );
+          // add placeholder to get the comma-and-space at the end
+          terms.push( "" );
+          this.value = terms.join( ", " );
+          return false;
+        }
+      }); 
+	    
+    
+ }
+    
 });
 
 $.ajax({ 
@@ -25,13 +68,45 @@ $.ajax({
     data: { PubToken: 'adminuser' }, 
     dataType: 'json',
     success: function (data) { 
-        for (var i = 0, len = data.items.length; i < len; i++) {
-        		 $('#dspFilter').append($('<option/>', { 
-       				 value: data.items[i].id,
-     					 text : data.items[i].name
-    	}));
+    var dspList = [] ;
+    for (var index = 0;index < data.items.length;index++) {
+    	dspList[index] = data.items[index].name + '[' + data.items[index].id + ']';
     }
-    }
+    $( "#dspFilter" )
+      // don't navigate away from the field on tab when selecting an item
+      .bind( "keydown", function( event ) {
+        if ( event.keyCode === $.ui.keyCode.TAB &&
+            $( this ).autocomplete( "instance" ).menu.active ) {
+          event.preventDefault();
+        }
+      })
+      .autocomplete({
+        minLength: 0,
+        source: function( request, response ) {
+          // delegate back to autocomplete, but extract the last term
+          response( $.ui.autocomplete.filter(
+            dspList, extractLast( request.term ) ) );
+        },
+        focus: function() {
+          // prevent value inserted on focus
+          return false;
+        },
+        select: function( event, ui ) {
+          var terms = split( this.value );
+          // remove the current input
+          terms.pop();
+          // add the selected item
+          terms.push( ui.item.value );
+          // add placeholder to get the comma-and-space at the end
+          terms.push( "" );
+          this.value = terms.join( ", " );
+          return false;
+        }
+      }); 
+	    
+    
+ }
+    
 });
 
 $.ajax({ 
@@ -40,28 +115,93 @@ $.ajax({
     data: { PubToken: 'adminuser' }, 
     dataType: 'json',
     success: function (data) { 
-        for (var i = 0, len = data.items.length; i < len; i++) {
-        		 $('#platformFilter').append($('<option/>', { 
-       				 value: data.items[i].id,
-     					 text : data.items[i].name
-    	}));
+       var platformList = [] ;
+    for (var index = 0;index < data.items.length;index++) {
+    	platformList[index] = data.items[index].name + '[' + data.items[index].id + ']';
     }
-    }
+    $( "#platformFilter" )
+      // don't navigate away from the field on tab when selecting an item
+      .bind( "keydown", function( event ) {
+        if ( event.keyCode === $.ui.keyCode.TAB &&
+            $( this ).autocomplete( "instance" ).menu.active ) {
+          event.preventDefault();
+        }
+      })
+      .autocomplete({
+        minLength: 0,
+        source: function( request, response ) {
+          // delegate back to autocomplete, but extract the last term
+          response( $.ui.autocomplete.filter(
+            platformList, extractLast( request.term ) ) );
+        },
+        focus: function() {
+          // prevent value inserted on focus
+          return false;
+        },
+        select: function( event, ui ) {
+          var terms = split( this.value );
+          // remove the current input
+          terms.pop();
+          // add the selected item
+          terms.push( ui.item.value );
+          // add placeholder to get the comma-and-space at the end
+          terms.push( "" );
+          this.value = terms.join( ", " );
+          return false;
+        }
+      }); 
+	    
+    
+ }
+    
 });
+
 
 $.ajax({ 
     type: 'GET', 
     url: 'http://localhost:9090/common/geo?pageSize=100&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201', 
     data: { PubToken: 'adminuser' }, 
     dataType: 'json',
-    success: function (data) { 
-        for (var i = 0, len = data.items.length; i < len; i++) {
-        		 $('#geoFilter').append($('<option/>', { 
-       				 value: data.items[i].id,
-     					 text : data.items[i].name
-    	}));
+    success: function (data) {  
+    var geoList = [] ;
+    for (var index = 0;index < data.items.length;index++) {
+    	geoList[index] = data.items[index].name + '[' + data.items[index].id + ']';
     }
-    }
+    $( "#geoFilter" )
+      // don't navigate away from the field on tab when selecting an item
+      .bind( "keydown", function( event ) {
+        if ( event.keyCode === $.ui.keyCode.TAB &&
+            $( this ).autocomplete( "instance" ).menu.active ) {
+          event.preventDefault();
+        }
+      })
+      .autocomplete({
+        minLength: 0,
+        source: function( request, response ) {
+          // delegate back to autocomplete, but extract the last term
+          response( $.ui.autocomplete.filter(
+            geoList, extractLast( request.term ) ) );
+        },
+        focus: function() {
+          // prevent value inserted on focus
+          return false;
+        },
+        select: function( event, ui ) {
+          var terms = split( this.value );
+          // remove the current input
+          terms.pop();
+          // add the selected item
+          terms.push( ui.item.value );
+          // add placeholder to get the comma-and-space at the end
+          terms.push( "" );
+          this.value = terms.join( ", " );
+          return false;
+        }
+      }); 
+	    
+    
+ }
+    
 });
 
 
@@ -72,17 +212,50 @@ $.ajax({
     data: { PubToken: 'adminuser' }, 
     dataType: 'json',
     success: function (data) { 
-        for (var i = 0, len = data.items.length; i < len; i++) {
-        		 $('#adSizeFilter').append($('<option/>', { 
-       				 value: data.items[i].id,
-     					 text : data.items[i].name
-    	}));
+    var adSizeList = [] ;
+    for (var index = 0;index < data.items.length;index++) {
+    	adSizeList[index] = data.items[index].name + '[' + data.items[index].id + ']';
     }
-    }
+    $( "#adSizeFilter" )
+      // don't navigate away from the field on tab when selecting an item
+      .bind( "keydown", function( event ) {
+        if ( event.keyCode === $.ui.keyCode.TAB &&
+            $( this ).autocomplete( "instance" ).menu.active ) {
+          event.preventDefault();
+        }
+      })
+      .autocomplete({
+        minLength: 0,
+        source: function( request, response ) {
+          // delegate back to autocomplete, but extract the last term
+          response( $.ui.autocomplete.filter(
+            adSizeList, extractLast( request.term ) ) );
+        },
+        focus: function() {
+          // prevent value inserted on focus
+          return false;
+        },
+        select: function( event, ui ) {
+          var terms = split( this.value );
+          // remove the current input
+          terms.pop();
+          // add the selected item
+          terms.push( ui.item.value );
+          // add placeholder to get the comma-and-space at the end
+          terms.push( "" );
+          this.value = terms.join( ", " );
+          return false;
+        }
+      }); 
+	    
+    
+ }
+    
 });
 
+
 $( "#applyFilterButton" ).on( "click", function() {
-    var savedSearchUrl =  'http://localhost:9090/SavedOfferAlerts/filter?'    
+    var savedSearchUrl =  'http://localhost:9090/SavedOfferAlerts/filter'    
     var buyers = []; 
 		$('#buyerFilter :selected').each(function(i, selected){ 
   					buyers[i] = $(selected).val(); 
@@ -142,51 +315,45 @@ $( "#applyFilterButton" ).on( "click", function() {
     dataType: 'json',
     success: function (data) {
     	  $('#data_table').empty(); 
+    	  $('#dataBlock').show();
         for (var i = 0, len = data.content.length; i < len; i++) {
-        		 var nam = data.content[i].name;
-        		 var startDate = new Date(data.content[i].startDate).toUTCString();
-        		 var endDate = new Date(data.content[i].endDate).toUTCString();
-        		 //alert(startDate);
-        		 var requestedById = data.content[i].accountId;
-        		 var compCount = data.content[i].count;
-        		 alert(compCount);
-        		 var lowerImpressions = data.content[i].searchFilters.lowerImpression;
-        		 var higherImpressions = data.content[i].searchFilters.higerImpression;
-        		 var impressions = lowerImpressions.toString() + "-" + higherImpressions.toString();
-
-        		 var lowerecpm = data.content[i].searchFilters.lowerCPM; ;
-        		 var higherecpm = data.content[i].searchFilters.higherCPM; ;
-        		 var ecpm = lowerecpm.toString() + "-" + higherecpm.toString();
-        		 var geos = '';
-        		 for(var index = 0 ; index < data.content[i].searchFilters.geoIds.length ; index++) {
-        		 	var geoId = data.content[i].searchFilters.geoIds[index];
-        		 	geos = geos + ',';
-        		 }
-        		 geos.toString().substring(0,geos.length-2);
-        		 
-        		 var platforms = '';
-        		 for(var index = 0 ; index < data.content[i].searchFilters.platformIds.length ; index++) {
-        		 	var platformId = data.content[i].searchFilters.platformIds[index];
-        		 	platforms = platforms + ',';
-        		 }
-        		 platforms.toString().substring(0,platforms.length-2);
-        		 
-        		 var adSizes = 'Not Available in Response';
-        		 /*for(var index = 0 ; index < platformIds.length ; index++) {
-        		 	
-        		 }*/
-        		 var preapproved = data.content[i].searchFilters.preApproved; ;
-        		 var searchTag = 'Not Available in Response';
-        		 $('#data-table-summary').show();
-        		
-        		 /*$('#data_table').append( '<tbody><tr><th class="data-table-th">Name :</th><td class="data-table-td">' + nam + '</td>' +
-        		 '<th class="data-table-th">Start date :</th><td class="data-table-td">' + startDate + '</td>' +
-        		 '<th class="data-table-th">End date :</th><td class="data-table-td">' + endDate + '</td>' +
-        		 '</tr>' +
-        		 '<tr><th class="data-table-th">Requested By :</th><td class="data-table-td">' + requestedById + '</td>' +
-        		 '<th class="data-table-th">Competition Count :</th><td class="data-table-td">' + compCount + '</td>' +
-        		 '</tr></tbody>' ); */
+        		 var nam = data.content[i].uijson.name;
+        		 var startDate = data.content[i].uijson.startDate
+        		 var endDate = data.content[i].uijson.endDate
+        		 var requestedById = data.content[i].uijson.requestedBy;
+        		 var compCount = data.content[i].uijson.competitionValue;
+        		 var impressions = data.content[i].uijson.formattedImpressions;
+				 var ecpm = data.content[i].uijson.formattedCPM;
+        		 var geos = data.content[i].uijson.geoList;
+        		 var platforms = data.content[i].uijson.platformList;
+        		 var adSizes = data.content[i].uijson.adSizeList;
+        		 var preapproved = data.content[i].uijson.preApproved;
+        		 var searchTag = data.content[i].uijson.searchTags;
+        		 var tbodyId = nam + i.toString();
+        		 $('#savedSearchfieldset').show();
+        		 $('#data_table').append( '<tbody id=' + tbodyId + 'class=\'datalabelSpan\'><tr>' +
+        		 '<td>Name :</td><td>' + nam + '</td>' +
+        		 '<td>Start date :</td><td>' + startDate + '</td>' +
+        		 '<td>End date :</td><td>' + endDate + '</td>' +
+        		 '</tr><tr>' +
+        		 '<td>Requested By :</td><td>' + requestedById + '</td>' +
+        		 '<td>Impressions :</td><td>' + impressions + '</td>' +
+        		 '</tr><tr>' +
+        		 '<td>Ecpm :</td><td>' + ecpm + '</td>' +
+        		 '<td>Geos :</td><td>' + geos + '</td>' +
+        		 '</tr><tr>' +
+        		 '<td>Platforms :</td><td>' + platforms + '</td>' +
+				 '<td>AdSizes :</td><td>' + adSizes + '</td>' +
+				 '</tr><tr>' +
+				 '<td>Pre Approved :</td><td>' + preapproved + '</td>' +
+				 '<td>Search Tag :</td><td>' + searchTag + '</td>' +
+				 '<tr><td colspan="10"><hr></td></tr>' +
+        		 '</tr></tbody>'); 
 			
+				  $('tbodyId').hover(function() {
+  						$( this ).backgroundColor = 'blue';
+ 						$( this ).color = 'black' ;
+				  });	
 				  //$('#data_table').append('<div id='+);
         		 
         		 
