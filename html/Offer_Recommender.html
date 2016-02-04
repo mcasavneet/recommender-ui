@@ -95,40 +95,38 @@
 
  
 <form name="filtersForm" action="#">
- 
-
   <fieldset>
-  <table>
+  <div> 
+  	 <label for="buyerFilter">Select a Buyer</label>
+    <select name="buyerFilter" id="buyerFilter" multiple="multiple">
+    </select> &nbsp;
+  </div>
+  <!--<table>
   <tr>
     <th><label for="buyerFilter">Select a Buyer</label></th>
-    <td><select name="buyerFilter" id="buyerFilter">
-    	<option>Select a Buyer</option>
+    <td><select name="buyerFilter" id="buyerFilter" multiple="multiple">
     </select>
     </td>
     <th><label for="dspFilter">Select a DSP</label></th>
-    <td><select name="dspFilter" id="dspFilter">
-    	<option>Select a DSP</option>
+    <td><select name="dspFilter" id="dspFilter" multiple="multiple">
     </select>
     </td>
     <th><label for="platformFilter">Select a Platform</label></th>
-    <td><select name="platformFilter" id="platformFilter">
-    	<option>Select a Platform</option>
-    </select>
+    <td><select name="platformFilter" id="platformFilter" multiple="multiple">
+    	</select>
     </td>
     </tr>
     <tr>
     <th><label for="geoFilter">Select a Geo</label></th>
-    <td><select name="geoFilter" id="geoFilter">
-    	<option>Select a Geo</option>
-    </select>
+    <td><select name="geoFilter" id="geoFilter" multiple="multiple">
+    	</select>
     </td>
     <th><label for="adSizeFilter">Select an AdSize</label></th>
-    <td><select name="adSizeFilter" id="adSizeFilter">
-    	<option>Select an AdSize</option>
-    </select></td>
+    <td><select name="adSizeFilter" id="adSizeFilter" multiple="multiple">
+    	</select></td>
     <th><label for="competition">Competition</label></th>
-    <td><input type="radio" name="competition" value="yes"> Yes</input>
-  		<input type="radio" name="competition" value="no"> No</input>
+    <td><input type="radio" name="competition" value="0"> Yes</input>
+  		<input type="radio" name="competition" value="1"> No</input>
   	 </td>
   	</tr>
   	<tr>
@@ -140,10 +138,17 @@
  	 	<td><button id="applyFilterButton" class="applyButton" type="submit" form="filtersForm" value="Submit">Apply Filters</button></td>
  	 </tr>
  	 </table>
+ 	 -->
   </fieldset>
 </form>
-
-  	</div>
+ 	</div>
+ 	<div class="dataBlocks" id="dataBlocks">
+			<div class="data-table-summary" id="data-table-summary">Saved Search As per selected filters</div>
+			<div class="block" id="block">
+					<!--<table class="data-table" id="data_table" summary="Saved Search As per selected filters"></table> -->	
+					
+			</div>
+ 	</div>
 </div>
   	<div id="tabs-2">
 		<table>

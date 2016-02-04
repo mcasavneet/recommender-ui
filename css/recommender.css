@@ -197,3 +197,34 @@ display: inline-block;
   align-content: flex-end;
 }
 
+.dataBlocks{
+	position: relative;
+  	min-height: 1px;
+	float:left;  	
+}
+
+.data-table{
+	display: block;
+  font-family: Times;
+  -webkit-font-smoothing: antialiased;
+  font-size:small;
+  overflow: auto;
+  width: auto;
+}  
+.data-table-th{
+    color: #342BDA;
+    background-color: #DDDDDD;
+    padding: 0px;
+  }
+.data-table-summary{
+	 background-color: #DDDDDD;
+    color: #342BDA;
+    font-size: large;
+    width:
+}
+.data-table-td{
+    background-color: #DDDDDD;
+    color: black;
+    padding: 0px;
+  }
+}
