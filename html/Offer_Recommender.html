@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<script type="text/javascript" src="../scripts/sure_shot.js"></script>
    <script src="../thirdParty/external/jquery/jquery.js"></script>
    <script src="../thirdParty/jquery-ui.js"></script>
    <link rel="stylesheet" type="text/css" href="../css/recommender.css" />
 	<link href="../thirdParty/jquery-ui.css" rel="stylesheet">
+
 
 	<!--<script type="text/javascript" src="/assets/script/jquery-1.11.1.min.js"></script>-->
 	<script type="text/javascript" src="../thirdParty/jquery.canvasjs.min.js"></script>
@@ -77,18 +77,74 @@
 
 
 
+
+	<script type="text/javascript" src="../scripts/sure_shot.js"></script>
+
 </head>
 <body>
 	<div><img src="../images/pubTop.png" /></div>
 	 <div class="tabs" id="tabs">
- 	 <ul>
-   	 	<li><a href="#tabs-1">Sure Shot</a></li>
-    		<li><a href="#tabs-2">Recommender</a></li>
-    		<li><a href="#tabs-3">$$</a></li>
-  	</ul>
+		 <ul>
+				<li><a href="#tabs-1">Sure Shot</a></li>
+				<li><a href="#tabs-2">Recommender</a></li>
+				<li><a href="#tabs-3">$$</a></li>
+		</ul>
+
   	<div id="tabs-1">
-    
+    	<div class="filters" id="filters">
+
+ 
+<form name="filtersForm" action="#">
+ 
+
+  <fieldset>
+  <table>
+  <tr>
+    <th><label for="buyerFilter">Select a Buyer</label></th>
+    <td><select name="buyerFilter" id="buyerFilter">
+    	<option>Select a Buyer</option>
+    </select>
+    </td>
+    <th><label for="dspFilter">Select a DSP</label></th>
+    <td><select name="dspFilter" id="dspFilter">
+    	<option>Select a DSP</option>
+    </select>
+    </td>
+    <th><label for="platformFilter">Select a Platform</label></th>
+    <td><select name="platformFilter" id="platformFilter">
+    	<option>Select a Platform</option>
+    </select>
+    </td>
+    </tr>
+    <tr>
+    <th><label for="geoFilter">Select a Geo</label></th>
+    <td><select name="geoFilter" id="geoFilter">
+    	<option>Select a Geo</option>
+    </select>
+    </td>
+    <th><label for="adSizeFilter">Select an AdSize</label></th>
+    <td><select name="adSizeFilter" id="adSizeFilter">
+    	<option>Select an AdSize</option>
+    </select></td>
+    <th><label for="competition">Competition</label></th>
+    <td><input type="radio" name="competition" value="yes"> Yes</input>
+  		<input type="radio" name="competition" value="no"> No</input>
+  	 </td>
+  	</tr>
+  	<tr>
+	  	<td></td>
+  		<td></td>
+  		<td></td>
+  		<td></td>
+  		<td></td>
+ 	 	<td><button id="applyFilterButton" class="applyButton" type="submit" form="filtersForm" value="Submit">Apply Filters</button></td>
+ 	 </tr>
+ 	 </table>
+  </fieldset>
+</form>
+
   	</div>
+</div>
   	<div id="tabs-2">
 		<table>
 			<tbody>
@@ -117,5 +173,6 @@
     
   	</div>
 </div>
+
 </body>
 </html>
