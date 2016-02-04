@@ -6,11 +6,77 @@
    <script src="../thirdParty/jquery-ui.js"></script>
    <link rel="stylesheet" type="text/css" href="../css/recommender.css" />
 	<link href="../thirdParty/jquery-ui.css" rel="stylesheet">
+
+	<!--<script type="text/javascript" src="/assets/script/jquery-1.11.1.min.js"></script>-->
+	<script type="text/javascript" src="../thirdParty/jquery.canvasjs.min.js"></script>
+
+
 	<script type="text/javascript" >
 		 $(function() {
-    $( "#tabs" ).tabs();
- 	 });
+    		$( "#tabs" ).tabs({
+
+    							activate: function(event, ui)
+    							{
+											  if (ui.newPanel.selector == "#tabs-2")
+											  {
+													loadGraph('GEO');
+       										  }
+    							}
+							});
+ 	 				});
+
+
+ 	 				function loadGraph(ele){
+					var url;
+
+ 	 				switch (ele) {
+										case 'GEO':
+											url="http://localhost:9090/html/example.json";
+											break;
+										case 'FREE':
+											url="http://localhost:9090/html/example.json";
+											break;
+										case 'MAXF':
+											url="http://localhost:9090/html/example.json";
+											break;
+										case 'ADSIZ':
+											url="http://localhost:9090/html/example.json";
+											break;
+										case 'CAT':
+											url="http://localhost:9090/html/example.json";
+											break;
+
+								 }
+
+
+ 	 							var options = {
+													animationEnabled: true,
+													data: [
+															{
+																type: "column", //change it to line, area, bar, pie, etc
+																dataPoints: []
+															}
+													]
+												};
+
+												var jqxhr = $.getJSON( url, function(data) {
+												console.log( "success" );
+												}).done(function(data) {
+													$.each( data, function( i, item ) {
+														options.data[0].dataPoints.push({ x: item.x, y: item.y,label:item.label });
+													  });
+													  $("#chartContainer").CanvasJSChart(options);
+												  }).fail(function() {
+													console.log( "error" );
+												  }).always(function() {
+													console.log( "complete" );
+												  });
+ 	 				}
+
 	</script>
+
+
+
 </head>
 <body>
 	<div><img src="../images/pubTop.png" /></div>
@@ -24,8 +90,29 @@
     
   	</div>
   	<div id="tabs-2">
-    
-  	</div>
+		<table>
+			<tbody>
+			<tr>
+				<td width="80%">
+					<div id="chartContainer" style="height: 300px;width:75%;">
+					</div>
+				</td>
+				<td width="20%">
+					<div id="buttons">
+						<a href="#"  onclick="loadGraph('GEO');" class="btn blue">Geo</a>
+						<a href="#" onclick="loadGraph('FREE');" class="btn green">Free Text</a>
+						<a href="#" onclick="loadGraph('MAXF');" class="btn red">Max. Filters</a>
+						<a href="#" onclick="loadGraph('ADSIZ');" class="btn purple">Adsizes</a>
+						<a href="#" onclick="loadGraph('CAT');" class="btn orange">Category</a>
+
+					</div>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+
+
+	</div>
   	<div id="tabs-3">
     
   	</div>
