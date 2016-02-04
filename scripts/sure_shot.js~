@@ -102,7 +102,7 @@ $( "#applyFilterButton" ).on( "click", function() {
     if(adSize == 'Select a AdSize')
     		adSize='';
     		
-    var comp = $('input[name=competition]:checked', '#filtersForm').val()		
+    var comp = $('input[name=competition]:checked', '#myForm').val()		
     		
 });
 
