@@ -5,6 +5,15 @@ $(document).ready(function(){
 	 document.getElementById("platformFilter").value='';
 	 document.getElementById("geoFilter").value='';
 	 document.getElementById("adSizeFilter").value='';
+	 messageDialog = $( "#messageDialog" ).dialog({
+	 	autoOpen: false,
+      modal: true,
+      buttons: {
+      close: function() {
+    		dialog.dialog( "close" );
+      }
+    }
+	 	});
 	 function createOffer() {
       var valid = true;
       name = document.getElementById('name').value;
@@ -31,12 +40,16 @@ $(document).ready(function(){
     				contentType:'application/json',
     				data : jsonString,
     				success: function(data, textStatus, jqXHR) {
-        					alert('Product/Offer created with name ' + name+'-Product / ' + name+'-Offer', 'Can do any changes if required');
+							$("#messageDialog").html('Product/Offer created with name ' + name+'-Product / ' + name+'-Offer', 'Can do any changes if required');        					
         					dialog.dialog( "close" );
+        					messageDialog.dialog( "open" );
+        					
     				},
     				error: function (jqXHR, textStatus, errorThrown)
     				{
- 							alert('Error : ' + errorThrown);
+ 							$("#messageDialog").html('Error' + errorThrown);        					
+        					dialog.dialog( "close" );
+        					messageDialog.dialog( "open" );
  							
    				}
     
@@ -67,7 +80,9 @@ $(document).ready(function(){
 		if(selectedDataBlockId === undefined){
 			alert('Please select any saved search');  
 			return;
-		}    
+		}  
+		document.getElementById("name").value='';
+	 	document.getElementById("ecpm").value='';
       dialog.dialog( "open" );
     });
     
