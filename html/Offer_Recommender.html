@@ -195,61 +195,35 @@ var jqxhr = $.getJSON(
 				<li><a href="#tabs-3">$$</a></li>
 		</ul>
 
-  	<div id="tabs-1">
-    	<div class="filters" id="filters">
-
- 
-<form name="filtersForm" action="#">
- 
-
-  <fieldset>
-  <table>
-  <tr>
-    <th><label for="buyerFilter">Select a Buyer</label></th>
-    <td><select name="buyerFilter" id="buyerFilter">
-    	<option>Select a Buyer</option>
-    </select>
-    </td>
-    <th><label for="dspFilter">Select a DSP</label></th>
-    <td><select name="dspFilter" id="dspFilter">
-    	<option>Select a DSP</option>
-    </select>
-    </td>
-    <th><label for="platformFilter">Select a Platform</label></th>
-    <td><select name="platformFilter" id="platformFilter">
-    	<option>Select a Platform</option>
-    </select>
-    </td>
-    </tr>
-    <tr>
-    <th><label for="geoFilter">Select a Geo</label></th>
-    <td><select name="geoFilter" id="geoFilter">
-    	<option>Select a Geo</option>
-    </select>
-    </td>
-    <th><label for="adSizeFilter">Select an AdSize</label></th>
-    <td><select name="adSizeFilter" id="adSizeFilter">
-    	<option>Select an AdSize</option>
-    </select></td>
-    <th><label for="competition">Competition</label></th>
-    <td><input type="radio" name="competition" value="yes"> Yes</input>
-  		<input type="radio" name="competition" value="no"> No</input>
-  	 </td>
-  	</tr>
-  	<tr>
-	  	<td></td>
-  		<td></td>
-  		<td></td>
-  		<td></td>
-  		<td></td>
- 	 	<td><button id="applyFilterButton" class="applyButton" type="submit" form="filtersForm" value="Submit">Apply Filters</button></td>
- 	 </tr>
- 	 </table>
-  </fieldset>
+<div id="tabs-1">
+<fieldset>
+<legend>Filters</legend>
+<form name="filtersForm" action="#"><table>	 
+  	 <tr><td><span class="labelSpan"><label for="buyerFilter">Select a Buyer</label></span></td><td><input id="buyerFilter" name="buyerFilter" size="30"></td>
+    <td><span class="labelSpan"><label for="dspFilter">Select a DSP</label></span></td><td><input id="dspFilter" name="dspFilter" size="30"/></td></tr>
+    <tr><td><span class="labelSpan"><label for="platformFilter">Select a Platform</label></span></td><td><input id="platformFilter" name="platformFilter" size="30"/></td>
+    <td><span class="labelSpan"><label for="geoFilter">Select a Geo</label></span></td><td><input id="geoFilter" name="geoFilter" size="30"/></td></tr>
+    <tr><td><span class="labelSpan"><label for="adSizeFilter">Select an AdSize</label></span></td><td><input id="adSizeFilter" name="adSizeFilter" size="30"/></td>
+    <td><span class="labelSpan"><label for="competition">Competition</label></span></td>
+    <td><input type="radio" name="competition" value="0"> Yes</input>
+  	 <input type="radio" name="competition" value="1"> No</input>
+  	 <button id="applyFilterButton" class="applyButton" type="submit" form="filtersForm" value="Submit">Apply Filters</button>
+  	 </td></tr>
+</table>
 </form>
+</fieldset>
 
-  	</div>
+<fieldset class="savedSearchfieldset" id="savedSearchfieldset" style="display: none;">
+<legend>Saved Search Alerts</legend>
+<div id="dataBlock" class="dataBlockStyle">
+<table id="data_table"></table>
 </div>
+</fieldset>
+<div id="createOfferButtonDiv" class="createOfferButtonStyle" ><button id="createOfferButton" class="applyButton" type="submit" value="Submit">Create Offer</button></div>
+</div> 
+
+
+
   	<div id="tabs-2">
 		<table>
 			<tbody>
@@ -671,5 +645,12 @@ var jqxhr = $.getJSON(
   	</div>
 </div>
 
+
+<div id="dialog-form" title="Please fill mandatory fields.">
+    <table>	 
+  	 <tr><td><span class="labelSpan"><label for="Name">Name*</label></span></td><td><input id="name" name="name"></td></tr>
+    <tr><td><span class="labelSpan"><label for="ecpm">Ecpm*</label></span></td><td><input id="ecpm" name="ecpm"></td></tr>
+	 </table>
+</div>
 </body>
 </html>
