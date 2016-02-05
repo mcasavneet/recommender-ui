@@ -1,4 +1,7 @@
 $(document).ready(function(){
+
+document.getElementById('dollara_result').style.visibility='hidden';
+
 $( "#getTopDemandButton" ).on( "click", function() {
 
     var getTopDSPButtonUrl =  'http://172.16.4.177:1789/analytics/topPartners?dimension=dspId';
@@ -33,6 +36,7 @@ $( "#getTopDemandButton" ).on( "click", function() {
         data: { PubToken: 'adminuser' },
         dataType: 'json',
         success: function (data) {
+        document.getElementById('dollara_result').style.visibility='visible';
         	 $.each( data, function( i, item ) {
         	        if( i<6){
 
@@ -52,6 +56,7 @@ $( "#getTopDemandButton" ).on( "click", function() {
         data: { PubToken: 'adminuser' },
         dataType: 'json',
         success: function (data) {
+        document.getElementById('dollara_result').style.visibility='visible';
         	 $.each( data, function( i, item ) {
         	        if( i<6){
 

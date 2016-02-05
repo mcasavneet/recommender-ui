@@ -31,6 +31,7 @@ $(document).ready(function(){
 		var jsonString = JSON.stringify(item);
       console.log(jsonString);
       
+
 		var url = 'http://172.16.4.177:1788/offers/create';
 
 		$.ajax({ 
@@ -55,6 +56,7 @@ $(document).ready(function(){
     
 		});	
 				
+
 		
 }
 	   dialog = $( "#dialog-form" ).dialog({
@@ -99,8 +101,8 @@ function extractLast( term ) {
 
 $.ajax({ 
     type: 'GET', 
-    url: 'http://172.16.4.177:1788/common/buyer?pageSize=1000&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201', 
-    data: { PubToken: 'adminuser' }, 
+    url: 'http://172.16.4.177:1788/common/buyer?pageSize=1000&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201',
+    data: { PubToken: 'adminuser' },
     dataType: 'json',
     success: function (data) { 
         /*for (var i = 0, len = data.items.length; i < len; i++) {
@@ -152,8 +154,8 @@ $.ajax({
 
 $.ajax({ 
     type: 'GET', 
-    url: 'http://172.16.4.177:1788/common/advertisingEntity?pageSize=1000&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201', 
-    data: { PubToken: 'adminuser' }, 
+    url: 'http://172.16.4.177:1788/common/advertisingEntity?pageSize=1000&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201',
+    data: { PubToken: 'adminuser' },
     dataType: 'json',
     success: function (data) { 
     var dspList = [] ;
@@ -199,8 +201,8 @@ $.ajax({
 
 $.ajax({ 
     type: 'GET', 
-    url: 'http://172.16.4.177:1788/common/platform?pageSize=1000&pageNumber=1&pmpEnabled=1', 
-    data: { PubToken: 'adminuser' }, 
+    url: 'http://172.16.4.177:1788/common/platform?pageSize=1000&pageNumber=1&pmpEnabled=1',
+    data: { PubToken: 'adminuser' },
     dataType: 'json',
     success: function (data) { 
        var platformList = [] ;
@@ -247,8 +249,8 @@ $.ajax({
 
 $.ajax({ 
     type: 'GET', 
-    url: 'http://172.16.4.177:1788/common/geo?pageSize=1000&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201', 
-    data: { PubToken: 'adminuser' }, 
+    url: 'http://172.16.4.177:1788/common/geo?pageSize=1000&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201',
+    data: { PubToken: 'adminuser' },
     dataType: 'json',
     success: function (data) {  
     var geoList = [] ;
@@ -296,8 +298,8 @@ $.ajax({
 
 $.ajax({ 
     type: 'GET', 
-    url: 'http://172.16.4.177:1788/common/adSize?pageSize=1000&pageNumber=1', 
-    data: { PubToken: 'adminuser' }, 
+    url: 'http://172.16.4.177:1788/common/adSize?pageSize=1000&pageNumber=1',
+    data: { PubToken: 'adminuser' },
     dataType: 'json',
     success: function (data) { 
     var adSizeList = [] ;
@@ -353,7 +355,7 @@ $("#data_table").on('click', 'tr', function () {
 });
 
 $( "#applyFilterButton" ).on( "click", function() {
-    var savedSearchUrl =  'http://172.16.4.177:1788/SavedOfferAlerts/filter?'   
+    var savedSearchUrl =  'http://172.16.4.177:1789/SavedOfferAlerts/filter?'   
     var buyerList= document.getElementById("buyerFilter").value;
     var buyers = buyerList.split(","); 
     for(var index = 0 ; index < buyers.length - 1 ; index++) {

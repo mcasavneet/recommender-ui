@@ -43,6 +43,7 @@
 
 
  	 				function loadGraph(ele){
+ 	 				console.log('loading graph for '+ele);
  	 				document.getElementById('my_favorite_latin_words').style.visibility='hidden';
 					document.getElementById('my_favorite_latin_words').style.display='none';
 					document.getElementById('chartContainer').style.visibility='visible';
@@ -60,10 +61,10 @@
 											url="http://172.16.4.177:1788/trending/filters";
 											break;
 										case 'ADSIZ':
-											url="http://172.16.4.177:1788/html/example.json";
+											url="http://172.16.4.177:1789/trending/adsizes";
 											break;
 										case 'CAT':
-											url="http://172.16.4.177:1788/html/example.json";
+											url="http://172.16.4.177:1789/trending/categories";
 											break;
 										case 'PLAT':
 											url="http://172.16.4.177:1788/trending/platforms";
@@ -92,22 +93,21 @@
 													]
 												};
 
-												$.ajax({ 
-										      type: 'GET', 
-    											url: url,
-    											data: { PubToken: 'adminuser' }, 
-    											crossDomain : true,
-   											dataType: 'jsonp',
-    											success: function (data) { 
+												var jqxhr = $.getJSON(
+																	url,
+																	function(data) {
+												console.log( "success" );
+												}).done(function(data) {
 													$.each( data, function( i, item ) {
 														options.data[0].dataPoints.push({ x: item.x, y: item.y,label:item.label });
 													  });
 													  $("#chartContainer").CanvasJSChart(options);
-    
-											  }
-    
-											});
-	}
+												  }).fail(function() {
+													console.log( "error" );
+												  }).always(function() {
+													console.log( "complete" );
+												  });
+ 	 				}
 
 
 
@@ -162,9 +162,9 @@ var jqxhr = $.getJSON(
 	<div><img src="../images/pubTop.png" /></div>
 	 <div class="tabs" id="tabs">
 		 <ul>
-				<li><a href="#tabs-1">Sure Shot</a></li>
-				<li><a href="#tabs-2">Recommender</a></li>
-				<li><a href="#tabs-3">$$</a></li>
+				<li><a href="#tabs-1"><b>Demand Discovery</b></a></li>
+				<li><a href="#tabs-2"><b>Targeting Trends</b></b></a></li>
+				<li><a href="#tabs-3"><b>Top Runners</b></a></li>
 		</ul>
 
 <div id="tabs-1">
@@ -203,14 +203,14 @@ var jqxhr = $.getJSON(
 					</div>
 					<div id="my_favorite_latin_words" style="width:100%; visibility:hidden;display:none; height: 450px;"></div>
 				</td>
-				<td width="20%">
+				<td width="20%" valign="top" >
 					<div id="buttons">
 						<a href="#"  onclick="loadGraph('GEO');" class="btn blue">Geo</a>
-						<a href="#" onclick="loadWordCloud();" class="btn green">Free Text</a>
-						<a href="#" onclick="loadGraph('MAXF');" class="btn red">Max. Filters</a>
-						<a href="#" onclick="loadGraph('ADSIZ');" class="btn purple">Adsizes</a>
-						<a href="#" onclick="loadGraph('CAT');" class="btn orange">Category</a>
-						<a href="#" onclick="loadGraph('PLAT');" class="btn yellow">Platform</a>
+						<a href="#" onclick="loadWordCloud();" class="btn grey">Free Text</a>
+						<a href="#" onclick="loadGraph('MAXF');" class="btn blue">Max. Filters</a>
+						<a href="#" onclick="loadGraph('ADSIZ');" class="btn grey">Adsizes</a>
+						<a href="#" onclick="loadGraph('CAT');" class="btn blue">Category</a>
+						<a href="#" onclick="loadGraph('PLAT');" class="btn grey">Platform</a>
 					</div>
 				</td>
 			</tr>
@@ -550,7 +550,7 @@ var jqxhr = $.getJSON(
 
 			<tr>
 				<td colspan="2">
-					<table width="100%">
+					<table width="100%" id="dollara_result">
 
 						<tr>
 							<td align="center" width="50%">
@@ -558,24 +558,24 @@ var jqxhr = $.getJSON(
 									<tbody>
 									<tr style="height:100px" >
 
-										<td colspan="6"  > Top 6 Demand Partners </td>
+										<td colspan="6"  ><b> Top Demand Partners<b> </td>
 
 									</tr>
 									<tr style="height:100px" >
 
-										<td colspan="6"  bgcolor="#819FF7" > <div id="Dsp_0"></div> </td>
+										<td colspan="6"  bgcolor="#2E9AFE" > <div id="Dsp_0"></div> </td>
 
 									</tr>
 									<tr style="height:100px">
 
-										<td colspan="3" bgcolor="#00FF80">  <div id="Dsp_1"></div></td>
-										<td colspan="3" bgcolor="#8181F7">  <div id="Dsp_2"></div></td>
+										<td colspan="3" bgcolor="#81BEF7">  <div id="Dsp_1"></div></td>
+										<td colspan="3" bgcolor="#81BEF7">  <div id="Dsp_2"></div></td>
 
 									</tr>
 									<tr style="height:100px">
-										<td colspan="2" bgcolor="#ECF6CE"> <div id="Dsp_3"></div></td>
-										<td colspan="2" bgcolor="#F78181">  <div id="Dsp_4"></div></td>
-										<td colspan="2" bgcolor="#00FFFF"> <div id="Dsp_5"></div></td>
+										<td colspan="2" bgcolor="#CEE3F6"> <div id="Dsp_3"></div></td>
+										<td colspan="2" bgcolor="#CEE3F6">  <div id="Dsp_4"></div></td>
+										<td colspan="2" bgcolor="#CEE3F6"> <div id="Dsp_5"></div></td>
 									</tr>
 									</tbody>
 								</table>
@@ -586,24 +586,24 @@ var jqxhr = $.getJSON(
 										<tbody>
 										<tr style="height:100px" >
 
-											<td colspan="6"  > Top 6 Buyers </td>
+											<td colspan="6"  ><b>Top Buyers</b>  </td>
 
 										</tr>
 										<tr style="height:100px" >
 
-											<td colspan="6"  bgcolor="#F6CED8" > <div id="atd_0"></div> </td>
+											<td colspan="6"  bgcolor="#2E9AFE" > <div id="atd_0"></div> </td>
 
 										</tr>
 										<tr style="height:100px">
 
-											<td colspan="3" bgcolor="#00FF80"> <div id="atd_1"></div></td>
-											<td colspan="3" bgcolor="#8181F7"> <div id="atd_2"></div></td>
+											<td colspan="3" bgcolor="#81BEF7"> <div id="atd_1"></div></td>
+											<td colspan="3" bgcolor="#81BEF7"> <div id="atd_2"></div></td>
 
 										</tr>
 										<tr style="height:100px">
-											<td colspan="2" bgcolor="#ECF6CE"><div id="atd_3"></div></td>
-											<td colspan="2" bgcolor="#F78181"> <div id="atd_4"></div></td>
-											<td colspan="2" bgcolor="#00FFFF"><div id="atd_5"></div></td>
+											<td colspan="2" bgcolor="#CEE3F6"><div id="atd_3"></div></td>
+											<td colspan="2" bgcolor="#CEE3F6"> <div id="atd_4"></div></td>
+											<td colspan="2" bgcolor="#CEE3F6"><div id="atd_5"></div></td>
 										</tr>
 										</tbody>
 									</table>
