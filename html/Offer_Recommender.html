@@ -51,19 +51,19 @@
 
  	 				switch (ele) {
 										case 'GEO':
-											url="http://localhost:9090/html/example.json";
+											url="http://172.16.4.177:1789/trending/geos";
 											break;
 										case 'FREE':
-											url="http://localhost:9090/html/example.json";
+											url="http://172.16.4.177:1789/trending/textSearch";
 											break;
 										case 'MAXF':
-											url="http://172.16.2.45:8585/trending/platforms";
+											url="http://172.16.4.177:1789/trending/platforms";
 											break;
 										case 'ADSIZ':
-											url="http://localhost:9090/html/example.json";
+											url="http://172.16.4.177:1789/html/example.json";
 											break;
 										case 'CAT':
-											url="http://localhost:9090/html/example.json";
+											url="http://172.16.4.177:1789/trending/filters";
 											break;
 
 								 }
@@ -100,11 +100,12 @@
 
 
 function loadWordCloud() {
-
+var url="http://172.16.4.177:1789/trending/textSearch";
 document.getElementById('chartContainer').style.visibility='hidden';
 document.getElementById('chartContainer').style.display='none';
 document.getElementById('my_favorite_latin_words').style.visibility='visible';
 document.getElementById('my_favorite_latin_words').style.display='block';
+
 
 var word_list = [
 {text: "teachers", weight: 50, html: {"data-tooltip": "50"}},
@@ -147,12 +148,34 @@ var word_list = [
 {text: "well", weight: 25, html: {"data-tooltip": "25"}}
       ];
 
+console.log( "loadWordCloud"+url );
+var jqxhr = $.getJSON(
+					url,
+					function(data) {
+						console.log( "success" );
+						}).done(function(data) {
 
-   $("#my_favorite_latin_words").jQCloud(word_list,
-        {
-          shape: "rectangular",
-          autoResize: true
-        });
+
+
+
+							$("#my_favorite_latin_words").jQCloud(word_list,
+														{
+							  shape: "rectangular",
+							  autoResize: true
+							});
+
+						  }).fail(function() {
+
+							console.log( "error" );
+						  }).always(function() {
+							console.log( "complete" );
+						  });
+
+
+
+
+
+
 }
 
 	</script>
