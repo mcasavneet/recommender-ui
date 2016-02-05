@@ -1,14 +1,17 @@
 $(document).ready(function(){
-	   var selectedDataBlockId ;
-	   
+	  var selectedDataBlockId ;
+	 document.getElementById("buyerFilter").value='';
+	 document.getElementById("dspFilter").value='';
+	 document.getElementById("platformFilter").value='';
+	 document.getElementById("geoFilter").value='';
+	 document.getElementById("adSizeFilter").value='';
 	 function createOffer() {
       var valid = true;
       name = document.getElementById('name').value;
 		ecpm = document.getElementById('ecpm').value;
- 		jsonObj = [];
+ 		
 		item={};
-		item["name"]=name;
-		item["ecpm"]=ecpm;
+		
 		var savedSearchData = selectedDataBlockId.split(',');
 		item["name"]=name;
 		item["ecpm"]=ecpm;
@@ -16,20 +19,34 @@ $(document).ready(function(){
 		item["endDate"]=savedSearchData[2];
 		item["accountId"]=savedSearchData[3];
 		item["accountType"]=savedSearchData[4];
-		jsonObj.push(item);
+		
       console.log(jsonObj);
-      var jsonString = JSON.stringify(jsonObj);
-      console.log(jsonString);
       
+      var jsonString = JSON.stringify(item);
+      console.log(jsonString);
+      alert(jsonObj);
 		var url = 'http://172.16.4.177:1788/offers/create';
-		$.post(url,jsonString,function(data, status){
-        alert("Data: " + data + "\nStatus: " + status);
-    });
+
+		$.ajax({ 
+			url : url,
+    				type: "POST",
+    				dataType: 'json',
+    				contentType:'application/json',
+    				data : jsonString,
+    				success: function(data, textStatus, jqXHR) {
+        					alert('Product/Offer created with name ' + name+'-Product / ' + name+'-Offer', 'Can do any changes if required');
+        					dialog.dialog( "close" );
+    				},
+    				error: function (jqXHR, textStatus, errorThrown)
+    				{
+ 							alert('Error : ' + errorThrown);
+ 							
+   				}
+    
+		});	
+				
+		
 }
-		
-		
-		
-		
 	   dialog = $( "#dialog-form" ).dialog({
       autoOpen: false,
       modal: true,
@@ -46,7 +63,7 @@ $(document).ready(function(){
  
     form = dialog.find( "form" ).on( "submit", function( event ) {
       event.preventDefault();
-      addUser();
+      createOffer();
     });
  
     $( "#createOfferButton" ).button().on( "click", function() {
@@ -70,7 +87,7 @@ function extractLast( term ) {
 
 $.ajax({ 
     type: 'GET', 
-    url: 'http://172.16.4.177:1788/common/buyer?pageSize=20&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201', 
+    url: 'http://172.16.4.177:1788/common/buyer?pageSize=1000&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201', 
     data: { PubToken: 'adminuser' }, 
     dataType: 'json',
     success: function (data) { 
@@ -123,7 +140,7 @@ $.ajax({
 
 $.ajax({ 
     type: 'GET', 
-    url: 'http://172.16.4.177:1788/common/advertiser?pageSize=20&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201', 
+    url: 'http://172.16.4.177:1788/common/advertisingEntity?pageSize=1000&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201', 
     data: { PubToken: 'adminuser' }, 
     dataType: 'json',
     success: function (data) { 
@@ -170,7 +187,7 @@ $.ajax({
 
 $.ajax({ 
     type: 'GET', 
-    url: 'http://172.16.4.177:1788/common/platform?pageSize=20&pageNumber=1&pmpEnabled=1', 
+    url: 'http://172.16.4.177:1788/common/platform?pageSize=1000&pageNumber=1&pmpEnabled=1', 
     data: { PubToken: 'adminuser' }, 
     dataType: 'json',
     success: function (data) { 
@@ -218,7 +235,7 @@ $.ajax({
 
 $.ajax({ 
     type: 'GET', 
-    url: 'http://172.16.4.177:1788/common/geo?pageSize=100&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201', 
+    url: 'http://172.16.4.177:1788/common/geo?pageSize=1000&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201', 
     data: { PubToken: 'adminuser' }, 
     dataType: 'json',
     success: function (data) {  
@@ -267,7 +284,7 @@ $.ajax({
 
 $.ajax({ 
     type: 'GET', 
-    url: 'http://172.16.4.177:1788/common/adSize?pageSize=20&pageNumber=1', 
+    url: 'http://172.16.4.177:1788/common/adSize?pageSize=1000&pageNumber=1', 
     data: { PubToken: 'adminuser' }, 
     dataType: 'json',
     success: function (data) { 
@@ -328,59 +345,74 @@ $( "#applyFilterButton" ).on( "click", function() {
     var buyerList= document.getElementById("buyerFilter").value;
     var buyers = buyerList.split(","); 
     for(var index = 0 ; index < buyers.length - 1 ; index++) {
-	 				//alert(buyers[index]);
+	 				var compData = buyers[index].toString().replace('[',',');
+	 				compData = compData.toString().replace(']','');
+	 				var compList = compData.split(",");
+	 				compData = compList[1];
   					if(index == 0)
-  						savedSearchUrl = savedSearchUrl + 'buyerIds='+buyers[index].substr(buyers[index].length-2,1);
+  						savedSearchUrl = savedSearchUrl + 'buyerIds='+ compData;
   					else {
-  						savedSearchUrl = savedSearchUrl + ',' + buyers[index].substr(buyers[index].length-2,1);
+  						savedSearchUrl = savedSearchUrl + ',' + compData ;
   					}
   	 }
   	 
   	 var dspList= document.getElementById("dspFilter").value;
-    var dsps = dspList.split(","); 
+    var dsps = dspList.split(",");
     for(var index = 0 ; index < dsps.length - 1 ; index++) {
-	 				//alert(buyers[index]);
+	 				var compData = dsps[index].toString().replace('[',',');
+	 				compData = compData.toString().replace(']','');
+	 				var compList = compData.split(",");
+	 				compData = compList[1];
   					if(index == 0)
-  						savedSearchUrl = savedSearchUrl + '&dspIds='+dsps[index].substr(dsps[index].length-2,1);
+  						savedSearchUrl = savedSearchUrl + '&dspIds='+ compData;
   					else {
-  						savedSearchUrl = savedSearchUrl + ',' + dsps[index].substr(dsps[index].length-2,1);
+  						savedSearchUrl = savedSearchUrl + ',' + compData;
   					}
   	 }
   	 
   	 var platformList= document.getElementById("platformFilter").value;
     var platforms = platformList.split(","); 
     for(var index = 0 ; index < platforms.length - 1 ; index++) {
-	 				//alert(buyers[index]);
+	 				var compData = platforms[index].toString().replace('[',',');
+	 				compData = compData.toString().replace(']','');
+	 				var compList = compData.split(",");
+	 				compData = compList[1];
   					if(index == 0)
-  						savedSearchUrl = savedSearchUrl + '&platformIds='+ platforms[index].substr(platforms[index].length-2,1);
+  						savedSearchUrl = savedSearchUrl + '&platformIds='+ compData;
   					else {
-  						savedSearchUrl = savedSearchUrl + ',' + platforms[index].substr(platforms[index].length-2,1);
+  						savedSearchUrl = savedSearchUrl + ',' + compData;
   					}
   	 }
   	 
   	 var geoList= document.getElementById("geoFilter").value;
     var geos = geoList.split(","); 
     for(var index = 0 ; index < geos.length - 1 ; index++) {
-	 				//alert(buyers[index]);
+	 				var compData = geos[index].toString().replace('[',',');
+	 				compData = compData.toString().replace(']','');
+	 				var compList = compData.split(",");
+	 				compData = compList[1];
   					if(index == 0)
-  						savedSearchUrl = savedSearchUrl + '&geoIds='+geos[index].substr(geos[index].length-2,1);
+  						savedSearchUrl = savedSearchUrl + '&geoIds='+ compData;
   					else {
-  						savedSearchUrl = savedSearchUrl + ',' + geos[index].substr(geos[index].length-2,1);
+  						savedSearchUrl = savedSearchUrl + ',' + compData;
   					}
   	 }
   	 
   	 var adsizeList= document.getElementById("adSizeFilter").value;
     var adsizes = adsizeList.split(","); 
     for(var index = 0 ; index < adsizes.length - 1 ; index++) {
-	 				//alert(buyers[index]);
+	 				var compData = adsizes[index].toString().replace('[',',');
+	 				compData = compData.toString().replace(']','');
+	 				var compList = compData.split(",");
+	 				compData = compList[1];
   					if(index == 0)
-  						savedSearchUrl = savedSearchUrl + '&adsizeIds='+adsizes[index].substr(adsizes[index].length-2,1);
+  						savedSearchUrl = savedSearchUrl + '&adsizeIds='+ compData;
   					else {
-  						savedSearchUrl = savedSearchUrl + ',' + adsizes[index].substr(adsizes[index].length-2,1);
+  						savedSearchUrl = savedSearchUrl + ',' + compData;
   					}
   	 }
  	 alert(savedSearchUrl);
-   $.ajax({ 
+    $.ajax({ 
     type: 'GET', 
     url: savedSearchUrl, 
     data: { PubToken: 'adminuser' }, 
@@ -401,7 +433,7 @@ $( "#applyFilterButton" ).on( "click", function() {
         		 var adSizes = data.content[i].uijson.adSizeList;
         		 var preapproved = data.content[i].uijson.preApproved;
         		 var searchTag = data.content[i].uijson.searchTags;
-        		 var tbodyId = nam + ',' + data.content[i].startDate + ',' + data.content[i].endDate + ',' + data.content[i].accountId + ',' + data.content[i].accountType;  
+        		 var tbodyId = nam + ',' + data.content[i].startDate + ',' + data.content[i].endDate + ',' + data.content[i].accountId + ',' + data.content[i].accountType + data.content[i].id;  
         		 $('#savedSearchfieldset').show();
         		 $('#createOfferButtonDiv').show();
 
