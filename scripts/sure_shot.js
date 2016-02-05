@@ -21,7 +21,7 @@ $(document).ready(function(){
       var jsonString = JSON.stringify(jsonObj);
       console.log(jsonString);
       
-		var url = 'http://172.16.4.177:1788/offers/create';
+		var url = 'http://172.16.4.177:1789/offers/create';
 		$.post(url,jsonString,function(data, status){
         alert("Data: " + data + "\nStatus: " + status);
     });
@@ -70,7 +70,7 @@ function extractLast( term ) {
 
 $.ajax({ 
     type: 'GET', 
-    url: 'http://172.16.4.177:1788/common/buyer?pageSize=20&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201', 
+    url: 'http://172.16.4.177:1789/common/buyer?pageSize=20&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201', 
     data: { PubToken: 'adminuser' }, 
     dataType: 'json',
     success: function (data) { 
@@ -123,7 +123,7 @@ $.ajax({
 
 $.ajax({ 
     type: 'GET', 
-    url: 'http://172.16.4.177:1788/common/advertiser?pageSize=20&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201', 
+    url: 'http://172.16.4.177:1789/common/advertiser?pageSize=20&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201', 
     data: { PubToken: 'adminuser' }, 
     dataType: 'json',
     success: function (data) { 
@@ -170,7 +170,7 @@ $.ajax({
 
 $.ajax({ 
     type: 'GET', 
-    url: 'http://172.16.4.177:1788/common/platform?pageSize=20&pageNumber=1&pmpEnabled=1', 
+    url: 'http://172.16.4.177:1789/common/platform?pageSize=20&pageNumber=1&pmpEnabled=1', 
     data: { PubToken: 'adminuser' }, 
     dataType: 'json',
     success: function (data) { 
@@ -218,7 +218,7 @@ $.ajax({
 
 $.ajax({ 
     type: 'GET', 
-    url: 'http://172.16.4.177:1788/common/geo?pageSize=100&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201', 
+    url: 'http://172.16.4.177:1789/common/geo?pageSize=100&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201', 
     data: { PubToken: 'adminuser' }, 
     dataType: 'json',
     success: function (data) {  
@@ -267,7 +267,7 @@ $.ajax({
 
 $.ajax({ 
     type: 'GET', 
-    url: 'http://172.16.4.177:1788/common/adSize?pageSize=20&pageNumber=1', 
+    url: 'http://172.16.4.177:1789/common/adSize?pageSize=20&pageNumber=1', 
     data: { PubToken: 'adminuser' }, 
     dataType: 'json',
     success: function (data) { 
@@ -324,7 +324,7 @@ $("#data_table").on('click', 'tr', function () {
 });
 
 $( "#applyFilterButton" ).on( "click", function() {
-    var savedSearchUrl =  'http://172.16.4.177:1788/SavedOfferAlerts/filter?'   
+    var savedSearchUrl =  'http://172.16.4.177:1789/SavedOfferAlerts/filter?'   
     var buyerList= document.getElementById("buyerFilter").value;
     var buyers = buyerList.split(","); 
     for(var index = 0 ; index < buyers.length - 1 ; index++) {
