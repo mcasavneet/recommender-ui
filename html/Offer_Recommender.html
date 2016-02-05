@@ -57,13 +57,16 @@
 											url="http://172.16.4.177:1789/trending/textSearch";
 											break;
 										case 'MAXF':
-											url="http://172.16.4.177:1789/trending/platforms";
+											url="http://172.16.4.177:1789/trending/filters";
 											break;
 										case 'ADSIZ':
 											url="http://172.16.4.177:1789/html/example.json";
 											break;
 										case 'CAT':
-											url="http://172.16.4.177:1789/trending/filters";
+											url="http://172.16.4.177:1789/html/example.json";
+											break;
+										case 'PLAT':
+											url="http://172.16.4.177:1789/trending/platforms";
 											break;
 
 								 }
@@ -71,6 +74,16 @@
 
  	 							var options = {
 													animationEnabled: true,
+													axisX: {
+														labelAngle: -40,
+														labelFontSize: 12
+													},
+													axisY: {
+														labelAngle: 0,
+														labelFontSize: 12
+													},
+
+
 													data: [
 															{
 																type: "column", //change it to line, area, bar, pie, etc
@@ -107,46 +120,7 @@ document.getElementById('my_favorite_latin_words').style.visibility='visible';
 document.getElementById('my_favorite_latin_words').style.display='block';
 
 
-var word_list = [
-{text: "teachers", weight: 50, html: {"data-tooltip": "50"}},
-{text: "classes", weight: 44, html: {"data-tooltip": "44"}},
-{text: "exercises", weight: 35, html: {"data-tooltip": "35"}},
-{text: "videos", weight: 34, html: {"data-tooltip": "34"}},
-{text: "course", weight: 34, html: {"data-tooltip": "34"}},
-{text: "online", weight: 31, html: {"data-tooltip": "31"}},
-{text: "quality", weight: 29, html: {"data-tooltip": "29"}},
-{text: "improve", weight: 29, html: {"data-tooltip": "29"}},
-{text: "site", weight: 28, html: {"data-tooltip": "28"}},
-{text: "sat", weight: 28, html: {"data-tooltip": "28"}},
-{text: "lessons", weight: 28, html: {"data-tooltip": "28"}},
-{text: "acme", weight: 28, html: {"data-tooltip": "28"}},
-{text: "live", weight: 27, html: {"data-tooltip": "27"}},
-{text: "content", weight: 27, html: {"data-tooltip": "27"}},
-{text: "good", weight: 26, html: {"data-tooltip": "26"}},
-{text: "time", weight: 26, html: {"data-tooltip": "26"}},
-{text: "excellent", weight: 26, html: {"data-tooltip": "26"}},
-{text: "material", weight: 26, html: {"data-tooltip": "26"}},
-{text: "well", weight: 25, html: {"data-tooltip": "25"}},
-{text: "teachers", weight: 50, html: {"data-tooltip": "50"}},
-{text: "classes", weight: 44, html: {"data-tooltip": "44"}},
-{text: "exercises", weight: 35, html: {"data-tooltip": "35"}},
-{text: "videos", weight: 34, html: {"data-tooltip": "34"}},
-{text: "course", weight: 34, html: {"data-tooltip": "34"}},
-{text: "online", weight: 31, html: {"data-tooltip": "31"}},
-{text: "quality", weight: 29, html: {"data-tooltip": "29"}},
-{text: "improve", weight: 29, html: {"data-tooltip": "29"}},
-{text: "site", weight: 28, html: {"data-tooltip": "28"}},
-{text: "sat", weight: 28, html: {"data-tooltip": "28"}},
-{text: "lessons", weight: 28, html: {"data-tooltip": "28"}},
-{text: "acme", weight: 28, html: {"data-tooltip": "28"}},
-{text: "live", weight: 27, html: {"data-tooltip": "27"}},
-{text: "content", weight: 27, html: {"data-tooltip": "27"}},
-{text: "good", weight: 26, html: {"data-tooltip": "26"}},
-{text: "time", weight: 26, html: {"data-tooltip": "26"}},
-{text: "excellent", weight: 26, html: {"data-tooltip": "26"}},
-{text: "material", weight: 26, html: {"data-tooltip": "26"}},
-{text: "well", weight: 25, html: {"data-tooltip": "25"}}
-      ];
+
 
 console.log( "loadWordCloud"+url );
 var jqxhr = $.getJSON(
@@ -154,11 +128,7 @@ var jqxhr = $.getJSON(
 					function(data) {
 						console.log( "success" );
 						}).done(function(data) {
-
-
-
-
-							$("#my_favorite_latin_words").jQCloud(word_list,
+							$("#my_favorite_latin_words").jQCloud(data,
 														{
 							  shape: "rectangular",
 							  autoResize: true
@@ -229,9 +199,9 @@ var jqxhr = $.getJSON(
 			<tbody>
 			<tr>
 				<td width="80%">
-					<div id="chartContainer" style="height: 300px;width:75%;">
+					<div id="chartContainer" style="height: 450px;width:100%;">
 					</div>
-					<div id="my_favorite_latin_words" style="visibility:hidden;display:none;width: 550px; height: 350px; border: 1px solid #ccc;"></div>
+					<div id="my_favorite_latin_words" style="width:100%; visibility:hidden;display:none; height: 450px;"></div>
 				</td>
 				<td width="20%">
 					<div id="buttons">
@@ -240,7 +210,7 @@ var jqxhr = $.getJSON(
 						<a href="#" onclick="loadGraph('MAXF');" class="btn red">Max. Filters</a>
 						<a href="#" onclick="loadGraph('ADSIZ');" class="btn purple">Adsizes</a>
 						<a href="#" onclick="loadGraph('CAT');" class="btn orange">Category</a>
-
+						<a href="#" onclick="loadGraph('PLAT');" class="btn yellow">Platform</a>
 					</div>
 				</td>
 			</tr>
