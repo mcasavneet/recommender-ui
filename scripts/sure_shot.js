@@ -21,7 +21,7 @@ $(document).ready(function(){
       var jsonString = JSON.stringify(jsonObj);
       console.log(jsonString);
       
-		var url = 'http://localhost:9090/offers/create';
+		var url = 'http://172.16.4.177:1788/offers/create';
 		$.post(url,jsonString,function(data, status){
         alert("Data: " + data + "\nStatus: " + status);
     });
@@ -70,7 +70,7 @@ function extractLast( term ) {
 
 $.ajax({ 
     type: 'GET', 
-    url: 'http://172.16.4.177:1789/common/buyer?pageSize=20&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201', 
+    url: 'http://172.16.4.177:1788/common/buyer?pageSize=20&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201', 
     data: { PubToken: 'adminuser' }, 
     dataType: 'json',
     success: function (data) { 
@@ -123,7 +123,7 @@ $.ajax({
 
 $.ajax({ 
     type: 'GET', 
-    url: 'http://172.16.4.177:1789/common/advertiser?pageSize=20&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201', 
+    url: 'http://172.16.4.177:1788/common/advertiser?pageSize=20&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201', 
     data: { PubToken: 'adminuser' }, 
     dataType: 'json',
     success: function (data) { 
@@ -170,7 +170,7 @@ $.ajax({
 
 $.ajax({ 
     type: 'GET', 
-    url: 'http://172.16.4.177:1789/common/platform?pageSize=20&pageNumber=1&pmpEnabled=1', 
+    url: 'http://172.16.4.177:1788/common/platform?pageSize=20&pageNumber=1&pmpEnabled=1', 
     data: { PubToken: 'adminuser' }, 
     dataType: 'json',
     success: function (data) { 
@@ -218,7 +218,7 @@ $.ajax({
 
 $.ajax({ 
     type: 'GET', 
-    url: 'http://172.16.4.177:1789/common/geo?pageSize=100&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201', 
+    url: 'http://172.16.4.177:1788/common/geo?pageSize=100&pageNumber=1&pmpEnabled=1&filters=loggedInOwnerId%20eq%2031445&filters=loggedInOwnerTypeId%20eq%201', 
     data: { PubToken: 'adminuser' }, 
     dataType: 'json',
     success: function (data) {  
@@ -267,7 +267,7 @@ $.ajax({
 
 $.ajax({ 
     type: 'GET', 
-    url: 'http://172.16.4.177:1789/common/adSize?pageSize=20&pageNumber=1', 
+    url: 'http://172.16.4.177:1788/common/adSize?pageSize=20&pageNumber=1', 
     data: { PubToken: 'adminuser' }, 
     dataType: 'json',
     success: function (data) { 
@@ -324,59 +324,62 @@ $("#data_table").on('click', 'tr', function () {
 });
 
 $( "#applyFilterButton" ).on( "click", function() {
-    var savedSearchUrl =  'http://localhost:9090/SavedOfferAlerts/filter'    
-    var buyers = []; 
-		$('#buyerFilter :selected').each(function(i, selected){ 
-  					buyers[i] = $(selected).val(); 
-  					if(i == 0)
-  						savedSearchUrl = savedSearchUrl + 'buyerIds='+buyers[i];
+    var savedSearchUrl =  'http://172.16.4.177:1788/SavedOfferAlerts/filter?'   
+    var buyerList= document.getElementById("buyerFilter").value;
+    var buyers = buyerList.split(","); 
+    for(var index = 0 ; index < buyers.length - 1 ; index++) {
+	 				//alert(buyers[index]);
+  					if(index == 0)
+  						savedSearchUrl = savedSearchUrl + 'buyerIds='+buyers[index].substr(buyers[index].length-2,1);
   					else {
-  						savedSearchUrl = savedSearchUrl + ',' + buyers[i];
+  						savedSearchUrl = savedSearchUrl + ',' + buyers[index].substr(buyers[index].length-2,1);
   					}
-  		 });
-    //alert(savedSearchUrl);		
-    var dsps = []; 
-		$('#dspFilter :selected').each(function(i, selected){ 
-  					dsps[i] = $(selected).val(); 
-  					if(i == 0)
-  						savedSearchUrl = savedSearchUrl + '&dspIds='+dsps[i];
+  	 }
+  	 
+  	 var dspList= document.getElementById("dspFilter").value;
+    var dsps = dspList.split(","); 
+    for(var index = 0 ; index < dsps.length - 1 ; index++) {
+	 				//alert(buyers[index]);
+  					if(index == 0)
+  						savedSearchUrl = savedSearchUrl + '&dspIds='+dsps[index].substr(dsps[index].length-2,1);
   					else {
-  						savedSearchUrl = savedSearchUrl + ',' + dsps[i];
+  						savedSearchUrl = savedSearchUrl + ',' + dsps[index].substr(dsps[index].length-2,1);
   					}
-  		 });
-    		
-    var geoIds = []; 
-		$('#geoFilter :selected').each(function(i, selected){ 
-  					geoIds[i] = $(selected).val(); 
-  					if(i == 0)
-  						savedSearchUrl = savedSearchUrl + '&geoIds='+geoIds[i];
+  	 }
+  	 
+  	 var platformList= document.getElementById("platformFilter").value;
+    var platforms = platformList.split(","); 
+    for(var index = 0 ; index < platforms.length - 1 ; index++) {
+	 				//alert(buyers[index]);
+  					if(index == 0)
+  						savedSearchUrl = savedSearchUrl + '&platformIds='+ platforms[index].substr(platforms[index].length-2,1);
   					else {
-  						savedSearchUrl = savedSearchUrl + ',' + geoIds[i];
+  						savedSearchUrl = savedSearchUrl + ',' + platforms[index].substr(platforms[index].length-2,1);
   					}
-  		 });
-  		 
-  	var plats = []; 
-		$('#platformFilter :selected').each(function(i, selected){ 
-  					plats[i] = $(selected).val(); 
-  					if(i == 0)
-  						savedSearchUrl = savedSearchUrl + '&platformIds='+plats[i];
+  	 }
+  	 
+  	 var geoList= document.getElementById("geoFilter").value;
+    var geos = geoList.split(","); 
+    for(var index = 0 ; index < geos.length - 1 ; index++) {
+	 				//alert(buyers[index]);
+  					if(index == 0)
+  						savedSearchUrl = savedSearchUrl + '&geoIds='+geos[index].substr(geos[index].length-2,1);
   					else {
-  						savedSearchUrl = savedSearchUrl + ',' + plats[i];
+  						savedSearchUrl = savedSearchUrl + ',' + geos[index].substr(geos[index].length-2,1);
   					}
-  		 });
-  		 
-  	var adSizes = []; 
-		$('#adSizeFilter :selected').each(function(i, selected){ 
-  					adSizes[i] = $(selected).val(); 
-  					if(i == 0)
-  						savedSearchUrl = savedSearchUrl + '&adSizeIds='+adSizes[i];
+  	 }
+  	 
+  	 var adsizeList= document.getElementById("adSizeFilter").value;
+    var adsizes = adsizeList.split(","); 
+    for(var index = 0 ; index < adsizes.length - 1 ; index++) {
+	 				//alert(buyers[index]);
+  					if(index == 0)
+  						savedSearchUrl = savedSearchUrl + '&adsizeIds='+adsizes[index].substr(adsizes[index].length-2,1);
   					else {
-  						savedSearchUrl = savedSearchUrl + ',' + adSizes[i];
+  						savedSearchUrl = savedSearchUrl + ',' + adsizes[index].substr(adsizes[index].length-2,1);
   					}
-  		 });
-    /*var competition = $("#filtersForm input[type='radio']:checked").val();	
- 	 savedSearchUrl = savedSearchUrl + '&nocompetition=' + competition	*/ 
- 	 //alert(savedSearchUrl);
+  	 }
+ 	 alert(savedSearchUrl);
    $.ajax({ 
     type: 'GET', 
     url: savedSearchUrl, 

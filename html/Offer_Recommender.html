@@ -92,21 +92,22 @@
 													]
 												};
 
-												var jqxhr = $.getJSON(
-																	url,
-																	function(data) {
-												console.log( "success" );
-												}).done(function(data) {
+												$.ajax({ 
+										      type: 'GET', 
+    											url: url,
+    											data: { PubToken: 'adminuser' }, 
+    											crossDomain : true,
+   											dataType: 'jsonp',
+    											success: function (data) { 
 													$.each( data, function( i, item ) {
 														options.data[0].dataPoints.push({ x: item.x, y: item.y,label:item.label });
 													  });
 													  $("#chartContainer").CanvasJSChart(options);
-												  }).fail(function() {
-													console.log( "error" );
-												  }).always(function() {
-													console.log( "complete" );
-												  });
- 	 				}
+    
+											  }
+    
+											});
+	}
 
 
 
@@ -175,9 +176,7 @@ var jqxhr = $.getJSON(
     <tr><td><span class="labelSpan"><label for="platformFilter">Select a Platform</label></span></td><td><input id="platformFilter" name="platformFilter" size="30"/></td>
     <td><span class="labelSpan"><label for="geoFilter">Select a Geo</label></span></td><td><input id="geoFilter" name="geoFilter" size="30"/></td></tr>
     <tr><td><span class="labelSpan"><label for="adSizeFilter">Select an AdSize</label></span></td><td><input id="adSizeFilter" name="adSizeFilter" size="30"/></td>
-    <td><span class="labelSpan"><label for="competition">Competition</label></span></td>
-    <td><input type="radio" name="competition" value="0"> Yes</input>
-  	 <input type="radio" name="competition" value="1"> No</input>
+    <td>
   	 <button id="applyFilterButton" class="applyButton" type="submit" form="filtersForm" value="Submit">Apply Filters</button>
   	 </td></tr>
 </table>
