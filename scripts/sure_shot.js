@@ -19,12 +19,9 @@ $(document).ready(function(){
 		item["endDate"]=savedSearchData[2];
 		item["accountId"]=savedSearchData[3];
 		item["accountType"]=savedSearchData[4];
-		
-      console.log(jsonObj);
-      
-      var jsonString = JSON.stringify(item);
+		var jsonString = JSON.stringify(item);
       console.log(jsonString);
-      alert(jsonObj);
+      
 		var url = 'http://172.16.4.177:1788/offers/create';
 
 		$.ajax({ 
@@ -411,7 +408,7 @@ $( "#applyFilterButton" ).on( "click", function() {
   						savedSearchUrl = savedSearchUrl + ',' + compData;
   					}
   	 }
- 	 alert(savedSearchUrl);
+ 	 //alert(savedSearchUrl);
     $.ajax({ 
     type: 'GET', 
     url: savedSearchUrl, 
